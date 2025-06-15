@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peoplerepnomics Minute Wage Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    h1 {
+      color: #0057a3;
+    }
+    label, input, button {
+      font-size: 1rem;
+      margin: 0.5rem 0;
+    }
+    input {
+      padding: 0.5rem;
+      width: 100px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #0057a3;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004080;
+    }
+    .result {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Peoplerepnomics Minute Wage Calculator</h1>
+  <p>Use the formula: <strong>MW<sub>h</sub> = MW<sub>m</sub> × 60</strong></p>
+
+  <label for="minuteWage">Enter Minute Wage (MW<sub>m</sub>):</label>
+  <input type="number" id="minuteWage" step="0.01" /><br>
+
+  <label for="dailyHours">Enter Work Hours per Day:</label>
+  <input type="number" id="dailyHours" value="8" step="0.1" /><br>
+
+  <label for="workDays">Enter Work Days per Year:</label>
+  <input type="number" id="workDays" value="260" step="1" /><br>
+
+  <button onclick="calculateWages()">Calculate</button>
+
+  <div class="result" id="output"></div>
+
+  <script>
+    function calculateWages() {
+      const mwm = parseFloat(document.getElementById('minuteWage').value);
+      const hoursPerDay = parseFloat(document.getElementById('dailyHours').value);
+      const workDaysPerYear = parseFloat(document.getElementById('workDays').value);
+
+      if (isNaN(mwm) || isNaN(hoursPerDay) || isNaN(workDaysPerYear)) {
+        document.getElementById('output').innerHTML = "Please enter valid numbers in all fields.";
+        return;
+      }
+
+      const mwh = mwm * 60;
+      const mwd = mwh * hoursPerDay;
+      const mwy = mwd * workDaysPerYear;
+
+      const format = new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' });
+
+      document.getElementById('output').innerHTML = `
+        <p>Hourly Wage (MW<sub>h</sub>): <strong>${format.format(mwh)}</strong></p>
+        <p>Daily Wage (${hoursPerDay} hrs): <strong>${format.format(mwd)}</strong></p>
+        <p>Yearly Wage (${workDaysPerYear} days): <strong>${format.format(mwy)}</strong></p>
+      `;
+    }
+  </script>
+</body>
+</html>
